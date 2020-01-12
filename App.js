@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import BookCount from "./components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
-import { setLightEstimationEnabled } from "expo/build/AR";
+import CustomActionButton from "./components/CustomActionButton";
 
 export default function App() {
   const [totalCount, setTotalCount] = useState(0);
@@ -32,6 +32,14 @@ export default function App() {
     setBooks(prev => [...prev, book]);
     setTotalCount(prev => prev + 1);
     setReadingCount(prev => prev + 1);
+    setIsAddNewBookVisible(false);
+  };
+
+  const markAsRead = (selectedBook, index) => {
+    let newList = books.filter(book => book !== selectedBook);
+    setBooks(newList);
+    setReadingCount(prev => prev - 1);
+    setReadCount(prev => prev + 1);
   };
 
   const renderItem = (item, index) => (
@@ -39,21 +47,12 @@ export default function App() {
       <View style={{ flex: 1, justifyContent: "center", paddingLeft: 5 }}>
         <Text>{item}</Text>
       </View>
-      <TouchableOpacity onPress={() => addBook(textInputData)}>
-        <View
-          style={{
-            width: 100,
-            height: 50,
-            backgroundColor: "#a5deba",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Text style={{ fontWeight: "bold", color: "white" }}>
-            Mark as read
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <CustomActionButton
+        style={{ width: 100, backgroundColor: "#a5deba" }}
+        onPress={() => markAsRead(item, index)}
+      >
+        <Text style={{ fontWeight: "bold", color: "white" }}>Mark as read</Text>
+      </CustomActionButton>
     </View>
   );
 
@@ -80,33 +79,16 @@ export default function App() {
               placeholder="Enter Book Name"
               placeholderTextColor="grey"
             />
+            <CustomActionButton
+              style={{ backgroundColor: "#a5deba" }}
+              onPress={() => addBook(textInputData)}
+            >
+              <Ionicons name="ios-checkmark" color="white" size={40} />
+            </CustomActionButton>
 
-            <TouchableOpacity onPress={() => addBook(textInputData)}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: "#a5deba",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Ionicons name="ios-checkmark" color="white" size={40} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={hideAddNewBook}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  backgroundColor: "#deada5",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Ionicons name="ios-close" color="white" size={40} />
-              </View>
-            </TouchableOpacity>
+            <CustomActionButton onPress={hideAddNewBook}>
+              <Ionicons name="ios-close" color="white" size={40} />
+            </CustomActionButton>
           </View>
         )}
         <FlatList
@@ -120,23 +102,16 @@ export default function App() {
           }
         />
 
-        <TouchableOpacity
-          style={{ position: "absolute", bottom: 20, right: 20 }}
+        <CustomActionButton
+          position="right"
           onPress={showAddNewBook}
+          style={{
+            borderRadius: 25,
+            backgroundColor: "#aad1e6"
+          }}
         >
-          <View
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              backgroundColor: "#aad1e6",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 30 }}>+</Text>
-          </View>
-        </TouchableOpacity>
+          <Text style={{ color: "white", fontSize: 30 }}>+</Text>
+        </CustomActionButton>
       </View>
       <View
         style={{
@@ -149,25 +124,6 @@ export default function App() {
         <BookCount title="Total" count={totalCount} />
         <BookCount title="Reading" count={readingCount} />
         <BookCount title="Read" count={readCount} />
-        {/* 
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text style={{ fontSize: 20 }}>Total</Text>
-          <Text style={{}}>{totalCount}</Text>
-        </View>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text style={{ fontSize: 20 }}>Reading</Text>
-          <Text style={{}}>{readingCount}</Text>
-        </View>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text style={{ fontSize: 20 }}>Read</Text>
-          <Text style={{}}>{readCount}</Text>
-        </View> */}
       </View>
       <SafeAreaView />
     </View>
