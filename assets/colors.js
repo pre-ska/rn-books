@@ -3,7 +3,7 @@ const colors = {
   bgSuccessDark: "#3c6e47da",
   bgError: "#deada5",
   bgPrimary: "#aad1e6",
-  bgMain: "#2e424d",
+  bgMain: "#4C5C77",
   bgTextInput: "#ececec",
   bgTextInputDark: "#b6b6b6",
   bgColor: "#f7f2f2",
