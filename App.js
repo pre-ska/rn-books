@@ -10,6 +10,7 @@ import WelcomeScreen from "./screens/AppSwitchnavigator/WelcomeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import LoadingScreen from "./screens/AppSwitchnavigator/LoadingScreen";
 import CustomDrawerComponent from "./screens/DrawerNavigatior/CustomDrawerComponent";
 
 import * as firebase from "firebase/app";
@@ -76,6 +77,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
+  LoadingScreen,
   LoginStackNavigator,
   AppDrawerNavigator
 });

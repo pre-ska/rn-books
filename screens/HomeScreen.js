@@ -23,16 +23,12 @@ class HomeScreen extends Component {
       readingCount: 0,
       readCount: 0,
       isAddNewBookVisible: false,
-      textInput: "",
-      books: []
+      textInputData: "",
+      books: [],
+      booksReading: [],
+      booksRead: []
     };
   }
-  // const [totalCount, setTotalCount] = useState(0);
-  // const [readingCount, setReadingCount] = useState(0);
-  // const [readCount, setReadCount] = useState(0);
-  // const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
-  // const [textInputData, setTextInputData] = useState("");
-  // const [books, setBooks] = useState([]);
 
   showAddNewBook = () => {
     this.setState({ isAddNewBookVisible: true });
@@ -49,11 +45,6 @@ class HomeScreen extends Component {
       readingCount: prev.readingCount + 1,
       isAddNewBookVisible: false
     }));
-
-    // setBooks(prev => [...prev, book]);
-    // setTotalCount(prev => prev + 1);
-    // setReadingCount(prev => prev + 1);
-    // setIsAddNewBookVisible(false);
   };
 
   markAsRead = (selectedBook, index) => {
@@ -64,9 +55,6 @@ class HomeScreen extends Component {
       readingCount: prev.readingCount - 1,
       readCount: prev.readCount + 1
     }));
-    // setBooks(newList);
-    // setReadingCount(prev => prev - 1);
-    // setReadCount(prev => prev + 1);
   };
 
   renderItem = (item, index) => (
@@ -90,7 +78,7 @@ class HomeScreen extends Component {
       totalCount,
       readingCount,
       readCount,
-      textInput
+      textInputData
     } = this.state;
 
     return (
@@ -103,14 +91,14 @@ class HomeScreen extends Component {
           {isAddNewBookVisible && (
             <View style={styles.textInputContainer}>
               <TextInput
-                onChangeText={text => this.setState({ textInput: text })}
+                onChangeText={text => this.setState({ textInputData: text })}
                 style={styles.textInput}
                 placeholder="Enter Book Name"
                 placeholderTextColor="grey"
               />
               <CustomActionButton
                 style={styles.checkmarkButton}
-                onPress={() => this.addBook(textInput)}
+                onPress={() => this.addBook(textInputData)}
               >
                 <Ionicons name="ios-checkmark" color="white" size={40} />
               </CustomActionButton>
